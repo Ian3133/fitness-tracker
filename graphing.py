@@ -22,23 +22,23 @@ def show_all_activites(data, days_back):
     while current_date <= today:              # creates a list of all the dates back
         all_days.append(current_date)# change this so not include year
         current_date += timedelta(days=1)
-    
+    #print(start_date, "this one")
     plt.bar(all_days, [0]*len(all_days), align="center")
     #print(all_days)
-    back = traverse_back(data, start_date) # amount of workouts in time fram
+   # activites = traverse_back(data, start_date) # amount of workouts in time fram
     #print(all_days)
     
-    values = [0]*days_back
-    count = 0
+    values = [0]*len(all_days)
+    count = 3
     for i in range(days_back):
-        date = datetime(int(data[count][1][:4]), int(data[count][1][5:7]), int(data[count][1][8:10])) 
-        if all_days[0] == date: # need to make this a loop for multiple activies on the same day
+        oldest_act = datetime(int(data[count][1][:4]), int(data[count][1][5:7]), int(data[count][1][8:10])).date() 
+        if all_days[i] == oldest_act: # need to make this a loop for multiple activies on the same day
             values[i] += 1
-            count += 1
+            count -= 1
     print(values)
     
         
-  
+    plt.bar(all_days, values, align="center")
     plt.xlabel("x-label")
     plt.ylabel("y-label")
     plt.title("title here")
@@ -48,7 +48,7 @@ def show_all_activites(data, days_back):
 def traverse_back(data, start_date):
     """find how far back till we reach the date given returns the number, including activites within the start date """
     count = 0
-    date = datetime(int(data[0][1][:4]), int(data[0][1][5:7]), int(data[0][1][8:10]))
+    date = datetime(int(data[0][1][:4]), int(data[0][1][5:7]), int(data[0][1][8:10])).date()
     today = datetime.today()
     while(date >= start_date):
         if count >= len(data):
