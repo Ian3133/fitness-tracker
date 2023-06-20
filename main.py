@@ -28,7 +28,7 @@ for row in csv_data:
     elif row[0] == "Running" or row[0] == "Treadmill Running":
         running.append(row)
     else:
-        other.append(row)
+        other.append(row)  
 
 for row in rowing: 
     print(row)
