@@ -30,7 +30,7 @@ for row in csv_data:
     else:
         other.append(row)
 
-for row in rowing:
+for row in rowing: 
     print(row)
 for row in cycling:
     print(row)
