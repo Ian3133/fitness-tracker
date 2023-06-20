@@ -8,11 +8,33 @@ def read_csv_file(file_path):
     with open(file_path, 'r') as csv_file:
         reader = csv.reader(csv_file)
         for row in reader:
-            data.append(row)
+            modified_row = [row[col_index] for col_index in kept_sections if col_index < len(row)]
+            data.append(modified_row)
     return data
 
 
 csv_file_path = 'Activities.csv'
 csv_data = read_csv_file(csv_file_path)
-print(csv_data[5])
+rowing = []
+cycling = []
+running = []
+other = []
 
+for row in csv_data:
+    if row[0] == "Indoor Rowing" or row[0] == "Rowing":
+        rowing.append(row)
+    elif row[0] == "Indoor Cycling" or row[0] == "Cycling":
+        cycling.append(row)
+    elif row[0] == "Running" or row[0] == "Treadmill Running":
+        running.append(row)
+    else:
+        other.append(row)
+
+for row in rowing:
+    print(row)
+for row in cycling:
+    print(row)
+for row in running:
+    print(row)
+for row in other:
+    print(row)
