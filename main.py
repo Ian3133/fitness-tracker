@@ -1,6 +1,6 @@
 import csv
 
-#removed_sections = [2,3, 10, 11,14,15, ]
+
 kept_sections = [0,1,4,5,6,7,8,9,12,25]
 
 def read_csv_file(file_path):
@@ -30,8 +30,11 @@ for row in csv_data:
     else:
         other.append(row)
 
-#for row in rowing: 
-#    print(row)
+
+for row in other: 
+    print(row)
+    
+    
 #for row in cycling:
 #    print(row)
 #for row in running:

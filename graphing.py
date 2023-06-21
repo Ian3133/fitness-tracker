@@ -22,14 +22,15 @@ def show_all_activites(data, days_back):
     while current_date <= today:              # creates a list of all the dates back
         all_days.append(current_date)# change this so not include year
         current_date += timedelta(days=1)
-    #print(start_date, "this one")
-    plt.bar(all_days, [0]*len(all_days), align="center")
+
+
+    #plt.bar(all_days, [0]*len(all_days), align="center")
     #print(all_days)
-   # activites = traverse_back(data, start_date) # amount of workouts in time fram
-    #print(all_days)
+    activites = traverse_back(data, start_date) 
+    print(activites)
        
     values = [0]*len(all_days)
-    count = 3
+    count = activites     -2 
     for i in range(days_back):
         oldest_act = datetime(int(data[count][1][:4]), int(data[count][1][5:7]), int(data[count][1][8:10])).date() 
         if all_days[i] == oldest_act: # need to make this a loop for multiple activies on the same day
@@ -46,7 +47,8 @@ def show_all_activites(data, days_back):
 
 
 def traverse_back(data, start_date):
-    """find how far back till we reach the date given returns the number, including activites within the start date """
+    """find how far back till we reach the date given returns the number, including activites within the start date 
+    need to input start_date as datetime() not with .date()"""
     count = 0
     date = datetime(int(data[0][1][:4]), int(data[0][1][5:7]), int(data[0][1][8:10])).date()
     today = datetime.today()
@@ -55,7 +57,7 @@ def traverse_back(data, start_date):
             print("out of bounds")
             break
         else:
-            date = datetime(int(data[count][1][:4]), int(data[count][1][5:7]), int(data[count][1][8:10]))
+            date = datetime(int(data[count][1][:4]), int(data[count][1][5:7]), int(data[count][1][8:10])).date()
             count+= 1
     return(count)
 #example call for above
@@ -64,9 +66,8 @@ def traverse_back(data, start_date):
 
 
 
-
-show_all_activites(rowing, 21)
-
+show_all_activites(csv_data[1:], 24)
+print(csv_data[1:20])
 
 '''
 #plt.plot(rowing[1],rowing[4])

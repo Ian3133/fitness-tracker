@@ -4,10 +4,6 @@ from datetime import datetime, timedelta
 from main import rowing, csv_data
 
 
-
-
-
-
 today = datetime.now().date()
 start_date = today - timedelta(days=10)  
 current_date = start_date
@@ -30,6 +26,6 @@ for i in range(10):
         values[i] += 1
         count -= 1
 print(values)
-    
         
-
+print(start_date > )
+print
