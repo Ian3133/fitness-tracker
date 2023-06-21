@@ -18,7 +18,7 @@ def show_all_activites(data, days_back):
     start_date = today - timedelta(days=days_back)  
     current_date = start_date
     
-    all_days = []
+    all_days = []  
     while current_date <= today:              # creates a list of all the dates back
         all_days.append(current_date)# change this so not include year
         current_date += timedelta(days=1)
@@ -27,7 +27,7 @@ def show_all_activites(data, days_back):
     #print(all_days)
    # activites = traverse_back(data, start_date) # amount of workouts in time fram
     #print(all_days)
-    
+       
     values = [0]*len(all_days)
     count = 3
     for i in range(days_back):
