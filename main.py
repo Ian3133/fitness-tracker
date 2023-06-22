@@ -31,8 +31,8 @@ for row in csv_data:
         other.append(row)
 
 
-for row in other: 
-    print(row)
+# for row in other: 
+#     print(row)
     
     
 #for row in cycling:
