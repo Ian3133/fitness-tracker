@@ -1,31 +1,23 @@
 import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
-from datetime import datetime, timedelta
-from main import rowing, csv_data
+import numpy as np
 
+# Generate data for x-axis
+x = np.linspace(1, 10, 100)  # Adjust the range and number of points as needed
 
-today = datetime.now().date()
-start_date = today - timedelta(days=10)  
-current_date = start_date
-    
-all_days = []
-while current_date <= today:              # creates a list of all the dates back
-    all_days.append(current_date)# change this so not include year
-    current_date += timedelta(days=1)
-    
-data = rowing
+# Generate data for y-axis (logarithmic values)
+y = np.log10(x)  # Change the base or function as desired (e.g., np.log(), np.log2())
 
+# Create the line graph
+plt.plot(x, y, '-', label='this Function')  # Add label to the plot
 
-values = [0]*10
-count = 3 # ned to change later
-for i in range(10):
-    latest_row = datetime(int(data[count][1][:4]), int(data[count][1][5:7]), int(data[count][1][8:10])).date()
-    #print(latest_row)
-    #print(all_days[i])
-    if all_days[i] == latest_row: # need to make this a loop for multiple activies on the same day
-        values[i] += 1
-        count -= 1
-print(values)
-        
-print(start_date > )
-print
+# Add a legend
+plt.legend()
+
+plt.xlabel('X')
+plt.ylabel('Logarithmic Y')
+plt.title('Logarithmic Function')
+plt.grid(True)
+
+# Display the graph
+plt.tight_layout()
+plt.show()
