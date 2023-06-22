@@ -18,7 +18,7 @@ times = []
 current_time = start_time
 while current_time != end_time:
     times.append(current_time.strftime('%M:%S'))  # Format time as minute:second
-    current_time -= delta
+    current_time -= delta 
 
 # Replace this equation with your own
 equation_values = [(numpy.log(x+1)*2*7/7.5)  for x in range(12)]
