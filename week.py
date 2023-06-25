@@ -1,44 +1,49 @@
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+import numpy as np
 from datetime import datetime, timedelta
-from main import rowing, csv_data, running, cycling
+from main import rowing, csv_data, running, cycling, other
+data = csv_data[1:]
 
+class week():
+    def __init__(self, monday):
+        self.monday = monday
+        self.total_time = 5 
 
-def show_week(monday, data):
-    # change below to monday after 
-    start_date = monday
-    current_date = start_date
-    
-    the_week = []  
-    for i in range(7):            
-        the_week.append(current_date)# change this so not include year   .strftime("%m-%d")
-        current_date += timedelta(days=1)
+    def show_week(self):
+        start_date = self.monday
+        current_date = start_date
+        #creates an array of the week with dates
+        the_week = []  
+        for i in range(7):            
+            the_week.append(current_date)
+            current_date += timedelta(days=1)
 
+        all_times = calc_time(start_date, data, the_week)          # the data is self but the rest aren't you can change that
+        run_val = calc_time(start_date, running, the_week)
+        cycling_val =  calc_time(start_date, cycling, the_week)
+        #other_val = calc_time(start_date, other, the_week)             # need to add other as well as streching maybe auto do so it adds 10 mins if ever recored
+        all_times_min, run_min, cycling_min = to_min(all_times), to_min(run_val), to_min(cycling_val)
+        
+        times_graph_format = []
+        for i in range(7):
+            times_graph_format.append(str(the_week[i])[5:])
+    
+        plt.yticks(np.arange(0, max(all_times_min), 20))
+        plt.grid(True, which='major', axis='y', linestyle='-', linewidth=.5)
+        plt.bar(times_graph_format, all_times_min, zorder= 2, color = "blue", label="Rowing")
+        plt.bar(times_graph_format, run_min, zorder= 2, color = "red", label="Running") 
+        plt.bar(times_graph_format, cycling_min, zorder= 2, color = "green", label="Cycling")
+        # add streching and other and probly weights
+        plt.legend()
+        plt.xlabel("Date")
+        plt.ylabel("Minutes")
+        plt.title("The Week of " + str(times_graph_format[0]))
+        plt.show()
+            
 
-    #activites = traverse_back(data, start_date) 
-    all_times = calc_time(start_date, data, the_week)  
-    times = [datetime.strptime(time_str, "%H:%M").strftime("%H:%M") for time_str in all_times]
-    print(times)
-    plt.bar(the_week, times, width = 1, color = "blue") # rowing and other counted here
-    
-    
-    
-    
-    
-    # run_vals = calc_time(start_date, running, the_week)
-    # plt.bar(the_week, run_vals, width = 1, color = "red") # showing running
-    # cycle_bars = calc_time(start_date, cycling, the_week)       # problem arose here
-    # plt.bar(the_week, cycle_bars, width = 1, color = "green") # showing cycling
-    # # can add others and make clearer but find demo 
-    #others like streching and weights
-
-
-    plt.xlabel("Date")
-    plt.ylabel("activities")
-    plt.title("the week of ____")
-    plt.show()
-    
-#datetime(2023,6,6).date()
+def to_min(times):
+    return ([int(time.split(':')[0])*60 + int(time.split(':')[1]) for time in times])
 
 def calc_time(monday, data, the_week):  # need to change to time right now just activites
     index_of_m = traverse_back(monday, data, len(data)) - 2
@@ -84,28 +89,13 @@ def add_times(time1, time2):
     return result.strftime(format_str)
 
 
-start = datetime(2023,6,12).date()
-show_week(start, csv_data[1:])
-
-class week():
-    def __init__(self, data):
-        self.data = data
-
-    def show_week(self, data):
-        print(5)
         
-        
-        
-        
-        
-    def total_time(self, data):
-        #will calc the time for all the data given
-        exit(0)
-        
-    
-        
-        
-    def aerobic_level(self, data):
-        # calc value + threshon and what not
-         exit(0)
-        
+monday_1 = datetime(2023, 6, 5).date()
+week_1 = week(monday_1)
+week_1.show_week()
+monday_2 = datetime(2023, 6, 12).date()
+week_2 = week(monday_2)
+week_2.show_week()
+monday_3 = datetime(2023, 6, 19).date()
+week_3 = week(monday_3)
+week_3.show_week()
