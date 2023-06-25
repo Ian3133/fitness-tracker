@@ -47,7 +47,17 @@ class week():
         for i in range(7):
             sum = add_times(sum, self.all_times[i])
         return sum
-        
+    
+    def aerobic_num(self):
+        return
+    def threshold_num(self):
+        return
+    def vo2_max_num(self):
+        return
+    
+    def pi_chart(self):
+        return
+       
         
 
 def to_min(times):
