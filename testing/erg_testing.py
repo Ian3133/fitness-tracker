@@ -5,7 +5,7 @@ import numpy
 import datetime
 
                 #(0 = 48
-rowing_times = [1.2, 2.2, 1.5, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+rowing_times = [1.2, 2.2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 # for i, value in enumerate(rowing_times):
 #     plt.annotate("1:"+str(48-value), xy=(i, value), xytext=(i, value + 1),
 #                  ha='center', va='bottom')

@@ -1,6 +1,7 @@
 import csv
 
 
+
 kept_sections = [0,1,4,5,6,7,8,9,12,25]
 
 def read_csv_file(file_path):
@@ -13,7 +14,7 @@ def read_csv_file(file_path):
     return data
 
 
-csv_file_path = 'Activities.csv'
+csv_file_path = 'Activites\Activities.csv'        # need to change to accept all csv files there and make a big one or somthing or sql backend
 csv_data = read_csv_file(csv_file_path)
 rowing = []
 cycling = []
@@ -31,7 +32,7 @@ for row in csv_data:
         other.append(row)
 
 
-# for row in other: 
+#for row in csv_data: 
 #     print(row)
     
     

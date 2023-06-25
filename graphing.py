@@ -5,6 +5,7 @@ from main import rowing, csv_data, running, cycling
 
 
 def show_all_activites(all_data, days_back):
+    
     today = datetime.now().date()
     start_date = today - timedelta(days=days_back)  
     current_date = start_date
@@ -19,7 +20,7 @@ def show_all_activites(all_data, days_back):
     plt.bar(all_days, all_values, width = 1, color = "blue") # rowing and other counted here
     run_vals = calc_values(running, all_days, days_back,start_date)
     plt.bar(all_days, run_vals, width = 1, color = "red") # showing running
-    cycle_bars = calc_values(cycling, all_days, days_back,start_date)
+    cycle_bars = calc_values(cycling, all_days, days_back,start_date)       # problem arose here
     plt.bar(all_days, cycle_bars, width = 1, color = "green") # showing cycling
     # can add others and make clearer but find demo 
     #others like streching and weights
@@ -29,6 +30,13 @@ def show_all_activites(all_data, days_back):
     plt.ylabel("activities")
     plt.title("All Training")
     plt.show()
+
+
+
+
+
+
+
 
 def calc_values(data, all_days, days_back, start_date):
     activites = traverse_back(data, start_date)
@@ -59,5 +67,5 @@ def traverse_back(data, start_date):
             count+= 1
     return(count)
 
-show_all_activites(csv_data[1:], 15)
+show_all_activites(csv_data[1:], 3)
 
