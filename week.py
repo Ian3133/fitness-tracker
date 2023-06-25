@@ -8,7 +8,7 @@ data = csv_data[1:]
 class week():
     def __init__(self, monday):
         self.monday = monday
-        self.total_time = 5 
+        self.all_times = []
 
     def show_week(self):
         start_date = self.monday
@@ -19,11 +19,11 @@ class week():
             the_week.append(current_date)
             current_date += timedelta(days=1)
 
-        all_times = calc_time(start_date, data, the_week)          # the data is self but the rest aren't you can change that
+        self.all_times = calc_time(start_date, data, the_week)          # the data is self but the rest aren't you can change that
         run_val = calc_time(start_date, running, the_week)
         cycling_val =  calc_time(start_date, cycling, the_week)
         #other_val = calc_time(start_date, other, the_week)             # need to add other as well as streching maybe auto do so it adds 10 mins if ever recored
-        all_times_min, run_min, cycling_min = to_min(all_times), to_min(run_val), to_min(cycling_val)
+        all_times_min, run_min, cycling_min = to_min(self.all_times), to_min(run_val), to_min(cycling_val)
         
         times_graph_format = []
         for i in range(7):
@@ -40,7 +40,15 @@ class week():
         plt.ylabel("Minutes")
         plt.title("The Week of " + str(times_graph_format[0]))
         plt.show()
-            
+        
+    def total_time(self):
+        # have to be called after the graph shoud more some of show graph into init function
+        sum = '0:00'
+        for i in range(7):
+            sum = add_times(sum, self.all_times[i])
+        return sum
+        
+        
 
 def to_min(times):
     return ([int(time.split(':')[0])*60 + int(time.split(':')[1]) for time in times])
@@ -65,7 +73,6 @@ def traverse_back(monday, W_data, max_data):
     need to input start_date as datetime() not with .date()"""
     count = 0
     current_date = datetime(int(W_data[0][1][:4]), int(W_data[0][1][5:7]), int(W_data[0][1][8:10])).date()
-    lastest_data = datetime.today().date()
     end = monday
     while(current_date >= end):   
         if count >= max_data:
@@ -90,12 +97,13 @@ def add_times(time1, time2):
 
 
         
-monday_1 = datetime(2023, 6, 5).date()
-week_1 = week(monday_1)
-week_1.show_week()
+# monday_1 = datetime(2023, 6, 5).date()
+# week_1 = week(monday_1)
+# week_1.show_week()
 monday_2 = datetime(2023, 6, 12).date()
 week_2 = week(monday_2)
 week_2.show_week()
-monday_3 = datetime(2023, 6, 19).date()
-week_3 = week(monday_3)
-week_3.show_week()
+print(week_2.total_time())
+# monday_3 = datetime(2023, 6, 19).date()
+# week_3 = week(monday_3)
+# week_3.show_week()
