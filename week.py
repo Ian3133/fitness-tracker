@@ -8,32 +8,35 @@ data = csv_data[1:]
 class week():
     def __init__(self, monday):
         self.monday = monday
-        self.all_times = []
-
-    def show_week(self):
+        self.the_week = []
+        self.start_up()
+        
+    def start_up(self):
         start_date = self.monday
         current_date = start_date
-        #creates an array of the week with dates
-        the_week = []  
         for i in range(7):            
-            the_week.append(current_date)
+            self.the_week.append(current_date)
             current_date += timedelta(days=1)
 
-        self.all_times = calc_time(start_date, data, the_week)          # the data is self but the rest aren't you can change that
-        run_val = calc_time(start_date, running, the_week)
-        cycling_val =  calc_time(start_date, cycling, the_week)
+        self.all_times,self.all_hr = calc_time_and_hr(start_date, data, self.the_week)         
+        run_val, run_hr= calc_time_and_hr(start_date, running, self.the_week)
+        cycling_val, cycling_hr =  calc_time_and_hr(start_date, cycling, self.the_week)
         #other_val = calc_time(start_date, other, the_week)             # need to add other as well as streching maybe auto do so it adds 10 mins if ever recored
-        all_times_min, run_min, cycling_min = to_min(self.all_times), to_min(run_val), to_min(cycling_val)
+        #streching = 
+        self.all_times_min, self.run_min, self.cycling_min = to_min(self.all_times), to_min(run_val), to_min(cycling_val)    
+        print(run_val)
         
+    def show_week(self):
+              
         times_graph_format = []
         for i in range(7):
-            times_graph_format.append(str(the_week[i])[5:])
+            times_graph_format.append(str(self.the_week[i])[5:])
     
-        plt.yticks(np.arange(0, max(all_times_min), 20))
+        plt.yticks(np.arange(0, max(self.all_times_min), 20))
         plt.grid(True, which='major', axis='y', linestyle='-', linewidth=.5)
-        plt.bar(times_graph_format, all_times_min, zorder= 2, color = "blue", label="Rowing")
-        plt.bar(times_graph_format, run_min, zorder= 2, color = "red", label="Running") 
-        plt.bar(times_graph_format, cycling_min, zorder= 2, color = "green", label="Cycling")
+        plt.bar(times_graph_format, self.all_times_min, zorder= 2, color = "blue", label="Rowing")
+        plt.bar(times_graph_format, self.run_min, zorder= 2, color = "red", label="Running") 
+        plt.bar(times_graph_format, self.cycling_min, zorder= 2, color = "green", label="Cycling")
         # add streching and other and probly weights
         plt.legend()
         plt.xlabel("Date")
@@ -47,36 +50,82 @@ class week():
         for i in range(7):
             sum = add_times(sum, self.all_times[i])
         return sum
-    
+        
     def aerobic_num(self):
-        return
-    def threshold_num(self):
-        return
+        value = 0
+        times = [num for num in self.all_times_min if num != 0]
+        for i in range(len(self.all_hr)):
+            activity = self.all_hr[i]
+            if activity > 175:
+                value += times[i] * .03
+            elif activity > 166:
+                value +=  times[i] * .06 
+            elif activity > 155:
+                value += times[i] * .1
+            elif activity > 147:
+                value += times[i] * .07
+            else:
+                value += times[i] * .02
+        return value
+            
+    def threshold_num(self):           # need to check the multiplying factor 
+        value = 0
+        times = [num for num in self.all_times_min if num != 0]
+        for i in range(len(self.all_hr)):
+            activity = self.all_hr[i]
+            if activity > 190:
+                value += times[i] * .4
+            elif activity > 175:
+                value +=  times[i] * .5
+            elif activity > 165:
+                value += times[i] * .1
+            else:
+                value += 0
+        return value
+    
     def vo2_max_num(self):
-        return
+        value = 0
+        times = [num for num in self.all_times_min if num != 0]
+        for i in range(len(self.all_hr)):
+            activity = self.all_hr[i]
+            if activity > 190:
+                value += times[i] * .9
+            elif activity > 185:
+                value +=  times[i] * .4
+            elif activity > 165:
+                value +=  times[i] * .005
+            else:
+                value += 0
+        return value
     
     def pi_chart(self):
-        return
-       
-        
+        values = [self.aerobic_num(), self.threshold_num(), self.vo2_max_num()] 
+        labels = ["Aerobic Training", "Lactic Threshold Training", "VO2 Max Training"]
+        colors = ['green', "purple", "red"]
 
+        plt.pie(values, labels=labels, colors=colors)
+        plt.legend()
+        plt.show()
+        
 def to_min(times):
     return ([int(time.split(':')[0])*60 + int(time.split(':')[1]) for time in times])
 
-def calc_time(monday, data, the_week):  # need to change to time right now just activites
+def calc_time_and_hr(monday, data, the_week): 
     index_of_m = traverse_back(monday, data, len(data)) - 2
     times = ["0:00"]*7 
-    
+    HRs = []
     for i in range(7):
         oldest_act = datetime(int(data[index_of_m][1][:4]), int(data[index_of_m][1][5:7]), int(data[index_of_m][1][8:10])).date() 
         if the_week[i] == oldest_act: 
             times[i] = add_times(times[i], data[index_of_m][4][:-3])
+            HRs.append(int(data[index_of_m][5]))
             index_of_m -= 1
             while the_week[i] == datetime(int(data[index_of_m-1][1][:4]), int(data[index_of_m-1][1][5:7]), int(data[index_of_m-1][1][8:10])).date():
                 #deals with multiple workouts on the same day
                 times[i] = add_times(times[i], data[index_of_m][4][:-3])
+                HRs.append(int(data[index_of_m][5]))
                 index_of_m -= 1
-    return times
+    return times, HRs
 
 def traverse_back(monday, W_data, max_data):
     """find how far back till we reach the date given returns the number, including activites within the start date 
@@ -113,7 +162,10 @@ def add_times(time1, time2):
 monday_2 = datetime(2023, 6, 12).date()
 week_2 = week(monday_2)
 week_2.show_week()
-print(week_2.total_time())
-# monday_3 = datetime(2023, 6, 19).date()
-# week_3 = week(monday_3)
-# week_3.show_week()
+#print(week_2.total_time())
+#print(week_2.aerobic_num(), week_2.threshold_num(), week_2.vo2_max_num())
+#week_2.pi_chart()
+#monday_3 = datetime(2023, 6, 19).date()
+#week_3 = week(monday_3)
+#week_3.show_week()
+
