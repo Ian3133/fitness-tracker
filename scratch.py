@@ -2,4 +2,7 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 from main import csv_data
 
-print(csv_data[6][5])
+
+
+string = "wordsssss.rtghfg"
+print(string.split('.')[0])
