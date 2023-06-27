@@ -27,7 +27,7 @@ class week():
         print(strech_val)
         self.all_times_min, self.run_min, self.cycling_min = to_min(self.all_times), to_min(run_val), to_min(cycling_val)
         self.weights_min = to_min(weights_val) # self.other_min = to_min(other_val)
-        self.strech_min =  calc_time_and_hr(start_date, streching, self.the_week)    # maybe double check this so not every day and actlly add to total times or change in data 
+        self.strech_min, extra =  calc_time_and_hr(start_date, streching, self.the_week)    # maybe double check this so not every day and actlly add to total times or change in data 
         
         
         

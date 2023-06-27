@@ -8,7 +8,6 @@ def read_csv_file(file_path):
     for index, row in df.iterrows():
         modified_row = [row[col_index] for col_index in kept_sections if col_index < len(row)]
         if modified_row[0] == "Yoga":
-            print("here")
             modified_row[4] = "00:15:00"
         data.append(modified_row)
     return data
@@ -38,7 +37,6 @@ for row in csv_data:
     else:
         other.append(row)
         
-print(streching)
 
 #for row in csv_data: 
 #     print(row)
