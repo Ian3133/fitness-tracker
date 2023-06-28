@@ -3,7 +3,7 @@ import matplotlib.dates as mdates
 import numpy as np
 from datetime import datetime, timedelta
 from main import data, streching, running, cycling, weights, rowing, other
-
+#print(streching)
 
 class week():
     def __init__(self, monday):
@@ -18,17 +18,19 @@ class week():
             self.the_week.append(current_date)
             current_date += timedelta(days=1)
 
-        self.all_times,self.all_hr = calc_time_and_hr(start_date, data, self.the_week)         
+        self.all_times, self.all_hr = calc_time_and_hr(start_date, data, self.the_week)         
         run_val, run_hr= calc_time_and_hr(start_date, running, self.the_week)
         cycling_val, cycling_hr =  calc_time_and_hr(start_date, cycling, self.the_week)
         weights_val, extra = calc_time_and_hr(start_date, weights, self.the_week)
         #other_val, extra = calc_time_and_hr(start_date, other, self.the_week)            
-        strech_val, extra = calc_time_and_hr(start_date, streching, self.the_week)
-        print(strech_val)
+        #strech_val, extra = calc_time_and_hr(start_date, streching, self.the_week)
+        
+        #print(strech_val)
+        
         self.all_times_min, self.run_min, self.cycling_min = to_min(self.all_times), to_min(run_val), to_min(cycling_val)
         self.weights_min = to_min(weights_val) # self.other_min = to_min(other_val)
-        self.strech_min, extra =  calc_time_and_hr(start_date, streching, self.the_week)    # maybe double check this so not every day and actlly add to total times or change in data 
-        
+        print(self.weights_min)
+        #self.strech_min =  to_min(strech_val)    # maybe double check this so not every day and actlly add to total times or change in data 
         
         
         
@@ -45,8 +47,10 @@ class week():
         plt.bar(times_graph_format, self.cycling_min, zorder= 2, color = "green", label="Cycling")
         plt.bar(times_graph_format, self.weights_min, zorder= 2, color = "purple", label="Weights")
         #plt.bar(times_graph_format, self.other_min, zorder= 2, color = "yellow", label="Other Exersize")
-        plt.bar(times_graph_format, self.strech_min, zorder= 2, color = "orange", label="Streching")
- 
+        #print(type(self.strech_min[2]))
+        #print(type(self.all_times_min[2]))
+        #plt.bar(times_graph_format, self.strech_min, zorder= 2, color = "orange", label="Streching")
+        
         plt.legend()
         plt.xlabel("Date")
         plt.ylabel("Minutes")
@@ -128,11 +132,13 @@ def calc_time_and_hr(monday, data, the_week):
             oldest_act = datetime(int(data[index_of_m][1][:4]), int(data[index_of_m][1][5:7]), int(data[index_of_m][1][8:10])).date() 
             if the_week[i] == oldest_act: 
                 times[i] = add_times(times[i], str(data[index_of_m][4]).split(".")[0][:-3])
+                #print(type(times[i]))
                 HRs.append(int(data[index_of_m][5]))
                 index_of_m -= 1
                 while the_week[i] == datetime(int(data[index_of_m-1][1][:4]), int(data[index_of_m-1][1][5:7]), int(data[index_of_m-1][1][8:10])).date():
                     #deals with multiple workouts on the same day
                     times[i] = add_times(times[i], str(data[index_of_m][4]).split(".")[0][:-3])
+                    #print(type(times[i]))
                     HRs.append(int(data[index_of_m][5]))
                     index_of_m -= 1       
     return times, HRs
@@ -164,13 +170,18 @@ def add_times(time1, time2):
 
     return result.strftime(format_str)
 
+#print(data[0])
+#print(add_times(data[14][4][:-3], data[15][4][:-3]))
         
-# monday_1 = datetime(2023, 6, 5).date()
-# week_1 = week(monday_1)
-# week_1.show_week()
-monday_2 = datetime(2023, 6, 23).date()
-week_2 = week(monday_2)
-week_2.show_week()
+monday_1 = datetime(2023, 6, 12).date()
+week_1 = week(monday_1)
+week_1.show_week()
+
+
+# monday_2 = datetime(2023, 6, 23).date()
+# week_2 = week(monday_2)
+# print(week_2.total_time())
+# week_2.show_week()
 #print(week_2.total_time())
 #print(week_2.aerobic_num(), week_2.threshold_num(), week_2.vo2_max_num())
 #week_2.pi_chart()

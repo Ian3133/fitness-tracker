@@ -2,20 +2,25 @@ import pandas as pd
 
 kept_sections = [0, 1, 4, 5, 6, 7, 8, 9, 12, 25]
 
+def edit_csv_file(file_path):
+    df = pd.read_csv(file_path)
+    df.loc[df["Activity Type"] == "Yoga", 'Time'] = '00:18:23'
+    df.to_csv(file_path, index=False)
+
 def read_csv_file(file_path):
     data = []
     df = pd.read_csv(file_path)
     for index, row in df.iterrows():
         modified_row = [row[col_index] for col_index in kept_sections if col_index < len(row)]
-        if modified_row[0] == "Yoga":
-            modified_row[4] = "00:15:00"
         data.append(modified_row)
     return data
 
 
-csv_file_path = 'Activites\Activities (4).csv'        # need to change to accept all csv files there and make a big one or somthing or sql backend
+
+csv_file_path = 'Activites\Activities (5).csv'        # need to change to accept all csv files there and make a big one or somthing or sql backend
+edit_csv_file(csv_file_path)
 csv_data = read_csv_file(csv_file_path)
-data = csv_data[1:]
+data = csv_data
 rowing = []
 cycling = []
 running = []
@@ -36,8 +41,7 @@ for row in csv_data:
         weights.append(row)
     else:
         other.append(row)
-        
-
+ 
 #for row in csv_data: 
 #     print(row)
     
