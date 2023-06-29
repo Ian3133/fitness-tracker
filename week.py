@@ -118,6 +118,7 @@ class week():
 
         plt.pie(values, labels=labels, colors=colors)
         plt.legend()
+        plt.xticks(rotation=45)
         plt.show()
         
 def to_min(times):
@@ -125,10 +126,10 @@ def to_min(times):
 
 def calc_time_and_hr(monday, data, the_week): 
     index_of_m = traverse_back(monday, data, len(data)) - 2
-    times = ["0:00"]*7 
+    times = ["0:00"]*len(the_week) 
     HRs = []
     if index_of_m > 0:
-        for i in range(7):
+        for i in range(len(the_week)):
             oldest_act = datetime(int(data[index_of_m][1][:4]), int(data[index_of_m][1][5:7]), int(data[index_of_m][1][8:10])).date() 
             if the_week[i] == oldest_act: 
                 times[i] = add_times(times[i], str(data[index_of_m][4]).split(".")[0][:-3])
@@ -173,9 +174,9 @@ def add_times(time1, time2):
 #print(data[0])
 #print(add_times(data[14][4][:-3], data[15][4][:-3]))
         
-monday_1 = datetime(2023, 6, 12).date()
-week_1 = week(monday_1)
-week_1.show_week()
+# monday_1 = datetime(2023, 6, 12).date()
+# week_1 = week(monday_1)
+# week_1.show_week()
 
 
 # monday_2 = datetime(2023, 6, 23).date()
