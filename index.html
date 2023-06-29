@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Basic Website</title>
+  <style>
+    body {
+      background-color: #f2f2f2;
+      font-family: Arial, sans-serif;
+    }
+
+    #header {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    #content {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 10px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    p {
+      line-height: 1.5;
+    }
+
+    .image-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start; /* Align items to the top */
+    }
+
+    .left-image {
+      width: 60%;
+      margin-left: -10%;
+      margin-right: 0px;
+    }
+
+    .invisible-box {
+      width: 30%;
+      display: flex;
+      flex-direction: column; /* Stack items vertically */
+      align-items: flex-start; /* Align items to the start */
+    }
+
+    .image-container img {
+      max-width: 95%;
+      height: auto;
+    }
+
+    .box {
+      border: none;
+      padding: 0px;
+      display: inline-block;
+    }
+
+    .box p {
+      text-align: center;
+    }
+
+    #contact {
+      margin-top: 40px;
+      text-align: center;
+      border-top: 1px solid #333;
+      padding-top: 20px;
+    }
+
+    /* New CSS for the second image text */
+    .right-image p {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="header">
+    <h1>Ian's Summer Training</h1>
+  </div>
+
+  <div id="content">
+    <h2>Summer Training</h2>
+    <p>Over the course of the summer, I have many goals and things I want to achieve in athletics. I have focused my training on different aspects to help me identify my faults and reach my goals. <br>
+    My team has athletic tests when I come back in the fall for ___ and ___, so I have focused my training to show __ and ___. </p>
+    <hr>
+    <div style="display: flex; justify-content: space-between;">
+      <h3>Summer 2023 training</h3>
+      <p style="margin-right: 5px;">Total Time: <strong>16:45</strong></p>
+    </div>
+      <div class="image-container">
+      <div class="left-image">
+        <img src="/images/summer.jpg" alt="Larger Image">
+      </div>
+      <div class="invisible-box">
+        <img src="/images/pi_summer.jpg" alt="Smaller Image">
+        <p><strong>Heavily Aerobic focused</strong> <br> 
+          <br> other thing here
+          <br>
+          Lorem ipsum dolor sit amet, consectetur adipid Fusce posuere convallis erat, in congue tortor ullamcorper at.</p>
+      </div>
+    </div>
+
+    <!-- Remaining content below the images -->
+    <p>This is a section of all activities. It does not include ___, but below are links to my weekly assessments as well as my plotting of speeds of more test-like things and others...</p>
+    <div class="box">
+      <h3>Page 1</h3>
+      <a href="page1.html">
+        <img src="image1.jpg" alt="Link 1">
+      </a>
+    </div>
+    
+    <div class="box">
+      <h3>Page 2</h3>
+      <a href="page2.html">
+        <img src="image2.jpg" alt="Link 2">
+      </a>
+    </div>
+
+    <div id="contact">
+      <h2>Contact Information</h2>
+      <p>Email: example@example.com</p>
+      <p>Phone: 123-456-7890</p>
+    </div>
+  </div>
+</body>
+</html>
