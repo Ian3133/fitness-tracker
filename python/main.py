@@ -1,26 +1,20 @@
 import pandas as pd
+import csv
 
 kept_sections = [0, 1, 4, 5, 6, 7, 8, 9, 12, 25]
 
-def edit_csv_file(file_path):
-    df = pd.read_csv(file_path)
-    df.loc[df["Activity Type"] == "Yoga", 'Time'] = '00:18:23'
-    df.to_csv(file_path, index=False)
-
 def read_csv_file(file_path):
     data = []
-    df = pd.read_csv(file_path)
-    for index, row in df.iterrows():
-        modified_row = [row[col_index] for col_index in kept_sections if col_index < len(row)]
-        data.append(modified_row)
+    with open(file_path, 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            modified_row = [row[col_index] for col_index in kept_sections if col_index < len(row)]
+            data.append(modified_row)
     return data
 
-
-
-csv_file_path = 'Activites\Activities (5).csv'        # need to change to accept all csv files there and make a big one or somthing or sql backend
-edit_csv_file(csv_file_path)
+csv_file_path = 'fitness-tracker\Activites\Activities (7).csv'
 csv_data = read_csv_file(csv_file_path)
-data = csv_data
+data = csv_data[1:]
 rowing = []
 cycling = []
 running = []
@@ -28,7 +22,7 @@ weights = []
 streching = []
 other = []
 
-for row in csv_data:
+for row in data:
     if row[0] == "Indoor Rowing" or row[0] == "Rowing":
         rowing.append(row)
     elif row[0] == "Yoga":
@@ -42,7 +36,7 @@ for row in csv_data:
     else:
         other.append(row)
  
-#for row in csv_data: 
+#for row in data: 
 #     print(row)
     
     

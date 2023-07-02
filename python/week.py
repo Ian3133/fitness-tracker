@@ -4,7 +4,7 @@ import numpy as np
 from datetime import datetime, timedelta
 from main import data, streching, running, cycling, weights, rowing, other
 #print(streching)
-
+from graphing import calc_time_and_hr, add_times, to_min, traverse_back
 class week():
     def __init__(self, monday):
         self.monday = monday
@@ -120,57 +120,7 @@ class week():
         plt.legend()
         plt.xticks(rotation=45)
         plt.show()
-        
-def to_min(times):
-    return ([int(time.split(':')[0])*60 + int(time.split(':')[1]) for time in times])
-
-def calc_time_and_hr(monday, data, the_week): 
-    index_of_m = traverse_back(monday, data, len(data)) - 2
-    times = ["0:00"]*len(the_week) 
-    HRs = []
-    if index_of_m > 0:
-        for i in range(len(the_week)):
-            oldest_act = datetime(int(data[index_of_m][1][:4]), int(data[index_of_m][1][5:7]), int(data[index_of_m][1][8:10])).date() 
-            if the_week[i] == oldest_act: 
-                times[i] = add_times(times[i], str(data[index_of_m][4]).split(".")[0][:-3])
-                #print(type(times[i]))
-                HRs.append(int(data[index_of_m][5]))
-                index_of_m -= 1
-                while the_week[i] == datetime(int(data[index_of_m-1][1][:4]), int(data[index_of_m-1][1][5:7]), int(data[index_of_m-1][1][8:10])).date():
-                    #deals with multiple workouts on the same day
-                    times[i] = add_times(times[i], str(data[index_of_m][4]).split(".")[0][:-3])
-                    #print(type(times[i]))
-                    HRs.append(int(data[index_of_m][5]))
-                    index_of_m -= 1       
-    return times, HRs
-
-def traverse_back(monday, W_data, max_data):
-    """find how far back till we reach the date given returns the number, including activites within the start date 
-    need to input start_date as datetime() not with .date()"""
-    count = 0
-    current_date = datetime(int(W_data[0][1][:4]), int(W_data[0][1][5:7]), int(W_data[0][1][8:10])).date()
-    end = monday
-    while(current_date >= end):   
-        if count >= max_data:
-            print("out of bounds")
-            break
-        current_date = datetime(int(W_data[count][1][:4]), int(W_data[count][1][5:7]), int(W_data[count][1][8:10])).date()
-        count+= 1
-        
-    return(count)
-
-def add_times(time1, time2):
-    # Parse the time strings have to be in hour minute format no seconds or . 
-    
-    format_str = "%H:%M"
-    datetime1 = datetime.strptime(time1, format_str)
-    datetime2 = datetime.strptime(time2, format_str)
-
-    # Add the datetime objects together
-    result = datetime1 + timedelta(hours=datetime2.hour, minutes=datetime2.minute)
-
-    return result.strftime(format_str)
-
+   
 #print(data[0])
 #print(add_times(data[14][4][:-3], data[15][4][:-3]))
         
