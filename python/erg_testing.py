@@ -30,10 +30,10 @@ test_days = []
 next_week= datetime.datetime(2023, 6, 6)
 week = datetime.timedelta(days=7)
 for i in range(12):
-    test_days.append(next_week.strftime("%D"))
+    test_days.append((next_week.strftime("%m-%d")))
     next_week += week
 
-print (test_days)
+#print (test_days)
 
 # Create the line graph
 plt.plot(test_days, times, ' ')
@@ -44,12 +44,13 @@ plt.bar(x, rowing_times)
 #plt.bar(test_days, , align="edge")
 plt.ylabel('Splits')
 plt.title('20min Erg, rate:24, HR ~ 185')
+plt.xticks(rotation=45)
 plt.legend()
 plt.grid(True)
 
 # Display the graph
 plt.tight_layout()
-plt.savefig("images/erg.jpg")
+plt.savefig("fitness-tracker/images/erg.jpg")
 plt.show()
 
 

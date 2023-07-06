@@ -38,11 +38,11 @@ for row in data:
  
 #for row in data: 
 #     print(row)
-    
-    
 #for row in cycling:
 #    print(row)
 #for row in running:
 #    print(row)
 #for row in other:
 #    print(row)
+
+

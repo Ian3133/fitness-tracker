@@ -208,6 +208,7 @@ def add_times(time1, time2):
     return result.strftime(format_str)
 
 
+
 total_time = total_t(all_times_min)
 
 
