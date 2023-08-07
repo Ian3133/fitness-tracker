@@ -42,7 +42,7 @@ def modify_html():
     # Write the rendered template to a new file
     with open('fitness-tracker/page2.html', 'w') as file:
         file.write(output)
-    
+
 
 
 if __name__ == '__main__':

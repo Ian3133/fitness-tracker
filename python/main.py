@@ -12,7 +12,7 @@ def read_csv_file(file_path):
             data.append(modified_row)
     return data
 
-csv_file_path = 'fitness-tracker\Activites\Activities (7).csv'
+csv_file_path = 'fitness-tracker\Activites\Activities (8).csv'
 csv_data = read_csv_file(csv_file_path)
 data = csv_data[1:]
 rowing = []
@@ -35,14 +35,4 @@ for row in data:
         weights.append(row)
     else:
         other.append(row)
- 
-#for row in data: 
-#     print(row)
-#for row in cycling:
-#    print(row)
-#for row in running:
-#    print(row)
-#for row in other:
-#    print(row)
-
-
+        

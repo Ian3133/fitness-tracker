@@ -211,7 +211,7 @@ def add_times(time1, time2):
 
 total_time = total_t(all_times_min)
 
-
+plot_summer()
 
 
 
