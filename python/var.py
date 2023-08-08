@@ -1,5 +1,17 @@
 from jinja2 import Environment, FileSystemLoader
-from graphing import total_time
+from graphing import plot_summer, total_time
+from erg_testing import plot_ergs
+from running import plot_runs
+from streching import plot_streching
+#from streching ---
+#from weekly import ###
+plot_summer()
+plot_ergs()
+plot_runs()
+plot_streching()
+#plot streching and weekly as well
+
+
 
 # Create an environment with the loader pointing to the directory of your HTML template file
 env = Environment(loader=FileSystemLoader('./'))

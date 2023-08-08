@@ -4,7 +4,7 @@ import numpy as np
 from datetime import datetime, timedelta
 from main import data, streching, running, cycling, weights, rowing, other
 #print(streching)
-from graphing import calc_time_and_hr, add_times, to_min, traverse_back
+from graphing import calc_time_and_hr, add_times, to_min, traverse_back, calc_time
 class week():
     def __init__(self, monday):
         self.monday = monday
@@ -18,24 +18,23 @@ class week():
             self.the_week.append(current_date)
             current_date += timedelta(days=1)
 
-        self.all_times, self.all_hr = calc_time_and_hr(start_date, data, self.the_week)         
-        run_val, run_hr= calc_time_and_hr(start_date, running, self.the_week)
-        cycling_val, cycling_hr =  calc_time_and_hr(start_date, cycling, self.the_week)
-        weights_val, extra = calc_time_and_hr(start_date, weights, self.the_week)
+        self.all_times, self.all_hr = calc_time_and_hr(start_date, data, self.the_week)
+        run_val = calc_time(start_date, running, self.the_week)
+        #run_val, run_hr= calc_time_and_hr(start_date, running, self.the_week)
+        cycling_val =  calc_time(start_date, cycling, self.the_week)
+        weights_val = calc_time(start_date, weights, self.the_week)
         #other_val, extra = calc_time_and_hr(start_date, other, self.the_week)            
         #strech_val, extra = calc_time_and_hr(start_date, streching, self.the_week)
         
         #print(strech_val)
-        
         self.all_times_min, self.run_min, self.cycling_min = to_min(self.all_times), to_min(run_val), to_min(cycling_val)
         self.weights_min = to_min(weights_val) # self.other_min = to_min(other_val)
-        print(self.weights_min)
-        #self.strech_min =  to_min(strech_val)    # maybe double check this so not every day and actlly add to total times or change in data 
-        
-        
-        
-    def show_week(self):
-              
+        #print(self.weights_min)
+        #self.strech_min =  to_min(strech_val)    # maybe double check this so not every day and actlly add to total times or change in data      
+        print(self.run_min)
+        print(self.cycling_min)
+    def save_fig(self):  
+        plt.figure()
         times_graph_format = []
         for i in range(7):
             times_graph_format.append(str(self.the_week[i])[5:])
@@ -55,7 +54,8 @@ class week():
         plt.xlabel("Date")
         plt.ylabel("Minutes")
         plt.title("The Week of " + str(times_graph_format[0]))
-        plt.show()
+        plt.savefig("fitness-tracker/images/week " + str(times_graph_format[0]))
+        self.pi_chart(str(times_graph_format[0]))
         
     def total_time(self):
         # have to be called after the graph shoud more some of show graph into init function
@@ -89,9 +89,9 @@ class week():
             if activity > 190:
                 value += times[i] * .4
             elif activity > 175:
-                value +=  times[i] * .5
+                value +=  times[i] * .6
             elif activity > 165:
-                value += times[i] * .1
+                value += times[i] * .2
             else:
                 value += 0
         return value
@@ -106,32 +106,53 @@ class week():
             elif activity > 185:
                 value +=  times[i] * .4
             elif activity > 165:
-                value +=  times[i] * .005
+                value +=  times[i] * .009
             else:
                 value += 0
         return value
     
-    def pi_chart(self):
+    def pi_chart(self, date):
+        plt.figure()
         values = [self.aerobic_num(), self.threshold_num(), self.vo2_max_num()] 
-        labels = ["Aerobic Training", "Lactic Threshold Training", "VO2 Max Training"]
+        labels = ["Aerobic Training", "Lactic Threshold Training", "High Anerobic"]
         colors = ['green', "purple", "red"]
 
         plt.pie(values, labels=labels, colors=colors)
         plt.legend()
         plt.xticks(rotation=45)
-        plt.show()
+        plt.savefig("fitness-tracker/images/pi_G " + str(date))
+   
    
 #print(data[0])
 #print(add_times(data[14][4][:-3], data[15][4][:-3]))
         
-# monday_1 = datetime(2023, 6, 12).date()
-# week_1 = week(monday_1)
-# week_1.show_week()
+monday_1 = datetime(2023, 6, 12).date()
+week_1 = week(monday_1)
+week_1.save_fig()
+
+mon_2 = monday_1 + timedelta(weeks=1)
+week_2 = week(mon_2)
+week_2.save_fig()
+
+mon_3 = monday_1 + timedelta(weeks=2)
+week_3 = week(mon_3)
+week_3.save_fig()
+
+mon_4 = monday_1 + timedelta(weeks=3)
+week_4 = week(mon_4)
+week_4.save_fig()
+
+mon_5 = monday_1 + timedelta(weeks=4)
+week_5 = week(mon_5)
+week_5.save_fig()
+
+week_6 = week(monday_1 + timedelta(weeks=5))
+week_6.save_fig()
+
+week_7= week(monday_1 + timedelta(weeks=6))
+week_7.save_fig()
 
 
-# monday_2 = datetime(2023, 6, 23).date()
-# week_2 = week(monday_2)
-# print(week_2.total_time())
 # week_2.show_week()
 #print(week_2.total_time())
 #print(week_2.aerobic_num(), week_2.threshold_num(), week_2.vo2_max_num())

@@ -2,6 +2,7 @@ import pandas as pd
 import csv
 
 kept_sections = [0, 1, 4, 5, 6, 7, 8, 9, 12, 25]
+rowing_times = [1.2, 2.2, 1, 0, 0, 3.1, 3.5, 2.9, 0, 0, 0, 0]
 
 def read_csv_file(file_path):
     data = []

@@ -35,6 +35,7 @@ def plot_summer():
     #creates pi chart
     create_pie(all_hr,all_times_min)
     
+    plt.figure()
     plt.yticks(np.arange(0, max(all_times_min), 20))
     plt.grid(True, which='major', axis='y', linestyle='-', linewidth=.5)
     #plt.bar(times_graph_format, times_graph_format)
@@ -53,7 +54,6 @@ def plot_summer():
     plt.ylabel("Minutes")
     plt.title("Summer 2023")
     plt.savefig("fitness-tracker/images/summer.jpg")
-    plt.show()
   
 def aerobic_num(hr, all_times):
     value = 0
@@ -103,6 +103,7 @@ def vo2_max_num(hr, all_times):
     return value
 
 def create_pie(hr, all_times):
+    plt.figure()
     values = [aerobic_num(hr, all_times), threshold_num(hr, all_times), vo2_max_num(hr, all_times)] 
     #print(values)
     labels = ["Aerobic", "Lactic Threshold", "VO2 Max"]
@@ -116,7 +117,6 @@ def create_pie(hr, all_times):
     
     plt.title("Cumulative Training")
     plt.savefig("fitness-tracker/images/pi_summer.jpg") 
-    plt.show()
 
 def total_t(minutes_list):
     # Convert each minute string to a timedelta object
@@ -207,11 +207,9 @@ def add_times(time1, time2):
 
     return result.strftime(format_str)
 
-
+plot_summer()
 
 total_time = total_t(all_times_min)
-
-plot_summer()
 
 
 
